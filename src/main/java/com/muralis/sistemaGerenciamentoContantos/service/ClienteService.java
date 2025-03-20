@@ -5,6 +5,7 @@ import com.muralis.sistemaGerenciamentoContantos.dto.ClienteResponseDto;
 import com.muralis.sistemaGerenciamentoContantos.entity.Cliente;
 import com.muralis.sistemaGerenciamentoContantos.mapper.ClienteMapper;
 import com.muralis.sistemaGerenciamentoContantos.repository.ClienteRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +29,14 @@ public class ClienteService {
         return clienteRepository.findAll().stream()
                 .map(clienteMapper::toDto)
                 .toList();
+    }
+
+    public ClienteResponseDto update(Long id, ClientDto dto) {
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+        cliente.setCpf(dto.getCpf());
+        cliente.setNome(dto.getNome());
+        cliente.setData_nascimento(dto.getData_nascimento());
+        cliente.setEndereco(dto.getEndereco());
+        return clienteMapper.toDto(clienteRepository.save(cliente));
     }
 }

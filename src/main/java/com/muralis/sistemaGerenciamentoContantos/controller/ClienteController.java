@@ -16,18 +16,23 @@ import java.util.List;
 public class ClienteController {
     private final ClienteService clienteService;
 
+    @PostMapping("/save")
+    public ResponseEntity<ClienteResponseDto> save(@RequestBody  ClientDto dto){
+        ClienteResponseDto response = clienteService.save(dto);
+        URI uri = URI.create("/cliente/" + response.getId());
+
+        return ResponseEntity.created(uri).body(response);
+    }
+
     @GetMapping
     public ResponseEntity<List<ClienteResponseDto>> getClients(){
         List<ClienteResponseDto> clientes = clienteService.getClientes();
         return ResponseEntity.ok(clientes);
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<ClienteResponseDto> save(@RequestBody  ClientDto dto){
-        ClienteResponseDto response = clienteService.save(dto);
-
-        URI uri = URI.create("/cliente/" + response.getId());
-
-        return ResponseEntity.created(uri).body(response);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ClienteResponseDto> update(@PathVariable Long id, @RequestBody ClientDto dto){
+        ClienteResponseDto response = clienteService.update(id, dto);
+        return ResponseEntity.ok(response);
     }
 }
