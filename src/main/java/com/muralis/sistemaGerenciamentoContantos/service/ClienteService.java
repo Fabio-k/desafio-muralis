@@ -32,11 +32,21 @@ public class ClienteService {
     }
 
     public ClienteResponseDto update(Long id, ClientDto dto) {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+        Cliente cliente = findCliente(id);
         cliente.setCpf(dto.getCpf());
         cliente.setNome(dto.getNome());
         cliente.setData_nascimento(dto.getData_nascimento());
         cliente.setEndereco(dto.getEndereco());
         return clienteMapper.toDto(clienteRepository.save(cliente));
+    }
+
+    public void remove(Long id) {
+        Cliente cliente = findCliente(id);
+        clienteRepository.delete(cliente);
+    }
+
+    private Cliente findCliente(Long id){
+        return clienteRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
     }
 }
