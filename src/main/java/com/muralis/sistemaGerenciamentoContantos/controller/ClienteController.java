@@ -5,18 +5,22 @@ import com.muralis.sistemaGerenciamentoContantos.dto.ClienteResponseDto;
 import com.muralis.sistemaGerenciamentoContantos.service.ClienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/cliente")
 @RequiredArgsConstructor
 public class ClienteController {
     private final ClienteService clienteService;
+
+    @GetMapping
+    public ResponseEntity<List<ClienteResponseDto>> getClients(){
+        List<ClienteResponseDto> clientes = clienteService.getClientes();
+        return ResponseEntity.ok(clientes);
+    }
 
     @PostMapping("/save")
     public ResponseEntity<ClienteResponseDto> save(@RequestBody  ClientDto dto){

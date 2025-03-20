@@ -8,6 +8,8 @@ import com.muralis.sistemaGerenciamentoContantos.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClienteService {
     @Autowired
@@ -20,5 +22,11 @@ public class ClienteService {
         Cliente cliente = clienteMapper.toCliente(dto);
 
         return clienteMapper.toDto(clienteRepository.save(cliente));
+    }
+
+    public List<ClienteResponseDto> getClientes() {
+        return clienteRepository.findAll().stream()
+                .map(clienteMapper::toDto)
+                .toList();
     }
 }
