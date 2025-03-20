@@ -2,18 +2,8 @@ CREATE TABLE cliente (
     cli_id SERIAL NOT NULL PRIMARY KEY,
     cli_nome VARCHAR(100) NOT NULL,
     cli_cpf VARCHAR(11) NOT NULL UNIQUE,
-    cli_data_nascimento DATE NOT NULL
-);
-
-CREATE TABLE endereco (
-    end_id SERIAL NOT NULL PRIMARY KEY,
-    end_cli_id INT NOT NULL,
-    end_rua VARCHAR(30),
-    end_bairro VARCHAR(30),
-    end_cidade VARCHAR(30),
-    end_estado VARCHAR(30),
-    end_pais VARCHAR(30),
-    CONSTRAINT fk_end_cli FOREIGN KEY(end_cli_id) REFERENCES cliente(cli_id) ON DELETE CASCADE
+    cli_data_nascimento DATE NOT NULL,
+    cli_endereco VARCHAR(255)
 );
 
 CREATE TABLE contato (

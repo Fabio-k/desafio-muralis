@@ -25,4 +25,7 @@ public class Cliente {
 
     @Column(name = "cli_data_nascimento")
     private LocalDate data_nascimento;
+
+    @Column(name = "cli_endereco")
+    private String endereco;
 }
