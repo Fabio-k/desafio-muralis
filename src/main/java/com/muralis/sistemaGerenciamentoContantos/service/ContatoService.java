@@ -9,6 +9,8 @@ import com.muralis.sistemaGerenciamentoContantos.repository.ContatoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ContatoService {
@@ -22,5 +24,12 @@ public class ContatoService {
         Contato contato = contatoMapper.toContato(dto);
         contato.setCliente(cliente);
         return contatoMapper.toDto(contatoRepository.save(contato));
+    }
+
+
+    public List<ContatoResponseDto> getContatos(Long id) {
+        Cliente cliente = clienteService.findCliente(id);
+
+        return cliente.getContatos().stream().map(contatoMapper::toDto).toList();
     }
 }

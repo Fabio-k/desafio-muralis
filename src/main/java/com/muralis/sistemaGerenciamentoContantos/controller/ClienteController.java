@@ -44,6 +44,12 @@ public class ClienteController {
         return ResponseEntity.ok(clientes);
     }
 
+    @GetMapping("/{id}/contatos")
+    public ResponseEntity<List<ContatoResponseDto>> getContatos(@PathVariable Long id){
+        List<ContatoResponseDto> contatos = contatoService.getContatos(id);
+        return ResponseEntity.ok(contatos);
+    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<ClienteResponseDto> update(@PathVariable Long id, @RequestBody ClientDto dto){
         ClienteResponseDto response = clienteService.update(id, dto);

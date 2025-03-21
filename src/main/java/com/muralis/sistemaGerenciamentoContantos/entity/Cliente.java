@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "cliente")
@@ -29,4 +30,7 @@ public class Cliente {
 
     @Column(name = "cli_endereco")
     private String endereco;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Contato> contatos;
 }
