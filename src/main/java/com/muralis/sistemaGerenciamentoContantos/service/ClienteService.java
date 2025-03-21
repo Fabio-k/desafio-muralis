@@ -25,8 +25,8 @@ public class ClienteService {
         return clienteMapper.toDto(clienteRepository.save(cliente));
     }
 
-    public List<ClienteResponseDto> getClientes() {
-        return clienteRepository.findAll().stream()
+    public List<ClienteResponseDto> getClientes(String nome, String cpf) {
+        return clienteRepository.findWithFilter(formatParam(nome), formatParam(cpf)).stream()
                 .map(clienteMapper::toDto)
                 .toList();
     }
@@ -48,5 +48,10 @@ public class ClienteService {
     private Cliente findCliente(Long id){
         return clienteRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+    }
+
+    private String formatParam(String value){
+        if (value == null || value.trim().isEmpty()) return null;
+        return "%" + value + "%";
     }
 }

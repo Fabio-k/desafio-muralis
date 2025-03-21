@@ -25,8 +25,11 @@ public class ClienteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ClienteResponseDto>> getClients(){
-        List<ClienteResponseDto> clientes = clienteService.getClientes();
+    public ResponseEntity<List<ClienteResponseDto>> getClients(
+            @RequestParam(name = "nome", required = false) String name,
+            @RequestParam(name = "cpf", required = false) String cpf
+    ){
+        List<ClienteResponseDto> clientes = clienteService.getClientes(name, cpf);
         return ResponseEntity.ok(clientes);
     }
 
