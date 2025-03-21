@@ -29,8 +29,14 @@ public class ContatoController {
     }
 
     @PutMapping("/contatos/update/{id}")
-    public ResponseEntity<ContatoResponseDto> updateContato(@PathVariable Long id, @RequestBody ContatoDto dto){
+    public ResponseEntity<ContatoResponseDto> update(@PathVariable Long id, @RequestBody ContatoDto dto){
         ContatoResponseDto response = contatoService.update(id, dto);
         return  ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/contatos/remove/{id}")
+    public ResponseEntity<Void> remove(@PathVariable Long id){
+        contatoService.remove(id);
+        return ResponseEntity.noContent().build();
     }
 }

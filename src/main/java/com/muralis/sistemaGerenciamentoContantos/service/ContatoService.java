@@ -1,6 +1,5 @@
 package com.muralis.sistemaGerenciamentoContantos.service;
 
-import com.muralis.sistemaGerenciamentoContantos.dto.ClientDto;
 import com.muralis.sistemaGerenciamentoContantos.dto.ContatoDto;
 import com.muralis.sistemaGerenciamentoContantos.dto.ContatoResponseDto;
 import com.muralis.sistemaGerenciamentoContantos.entity.Cliente;
@@ -41,6 +40,11 @@ public class ContatoService {
         contato.setValor(dto.getValor());
         contato.setObservacao(dto.getObservacao());
         return contatoMapper.toDto(contatoRepository.save(contato));
+    }
+
+    public void remove(Long id) {
+        Contato contato = findContato(id);
+        contatoRepository.delete(contato);
     }
 
     private Contato findContato(Long id){
