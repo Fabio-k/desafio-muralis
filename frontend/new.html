@@ -65,13 +65,13 @@
           },
           body: JSON.stringify(clientData),
         });
+        const result = await response.json();
 
         if (response.ok) {
-          window.location.href = "index.html";
+          window.location.href = `show.html?id=${result.id}`;
         }
 
         if (response.status == 400) {
-          const result = await response.json();
           const errorList = document.getElementById("errorList");
           result.forEach((message) => {
             let li = document.createElement("li");

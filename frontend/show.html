@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cliente</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <main>
+      <a href="index.html">voltar</a>
+
+      <h1 id="name"></h1>
+      <p id="cpf"></p>
+      <p id="birthDate"></p>
+      <p id="address"></p>
+      <ul id="contactList"></ul>
+    </main>
+  </body>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const clientId = params.get("id");
+    fetch(`http://localhost:8080/clientes/${clientId}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erro ao buscar os dados " + response.status);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        renderCliente(data);
+      });
+
+    function renderCliente(data) {
+      const name = document.getElementById("name");
+      const cpf = document.getElementById("cpf");
+      const birthDate = document.getElementById("birthDate");
+      const address = document.getElementById("address");
+      const contactsList = document.getElementById("contactList");
+
+      name.innerText = data.nome;
+      cpf.innerText = data.cpf;
+      birthDate.innerText = data.data_nascimento;
+      address.innerText = data.endereco;
+
+      data.contatos.forEach((contato) => {
+        let li = document.createElement("li");
+        li.innerText = contato.tipo + " " + contato.valor;
+        contactsList.appendChild(li);
+      });
+    }
+  </script>
+</html>
