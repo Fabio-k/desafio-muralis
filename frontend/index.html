@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Clientes</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Contatos</h1>
+
+      <div>
+        <input id="nameInput" type="text" placeholder="pesquisar por nome" />
+        <input id="cpfInput" type="text" placeholder="pesquisar por CPF" />
+        <button id="searchButton" type="button">pesquisar</button>
+      </div>
+
+      <a href="new.html">Novo contato</a>
+
+      <div id="clientList"></div>
+    </main>
+
+    <script>
+      getClients("http://localhost:8080/clientes");
+
+      document.getElementById("searchButton").addEventListener("click", () => {
+        console.log("clicked");
+        const nome = document.getElementById("nameInput").value;
+        const cpf = document.getElementById("cpfInput").value;
+
+        getClients(
+          `http://localhost:8080/clientes?nome=${encodeURIComponent(
+            nome
+          )}&cpf=${encodeURIComponent(cpf)}`
+        );
+      });
+
+      function getClients(url) {
+        return fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erro ao buscar os dados " + response.status);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            renderClientes(data);
+          });
+      }
+
+      function renderClientes(clients) {
+        const container = document.getElementById("clientList");
+        container.innerHTML = "";
+        clients.forEach((client) => {
+          const card = document.createElement("div");
+          card.className = "client-card";
+          card.innerHTML = `
+            <p> ${client.nome}</p>
+            <p class="cpfText"> ${client.cpf}</p>
+          `;
+          container.appendChild(card);
+        });
+      }
+    </script>
+  </body>
+</html>

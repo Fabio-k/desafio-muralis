@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>novo cliente</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Novo Cliente</h1>
+      <form onsubmit="submitClient(event)" method="post">
+        <ul id="errorList"></ul>
+        <div>
+          <label for="name">Nome:</label>
+          <input id="name" type="text" placeholder="Digite o nome do cliente" />
+        </div>
+
+        <div>
+          <label for="cpf">CPF:</label>
+          <input id="cpf" type="text" placeholder="ex: 12312312312" />
+        </div>
+
+        <div>
+          <label for="birthDate">Data de nascimento:</label>
+          <input
+            id="birthDate"
+            type="date"
+            placeholder="Digite o nome do cliente"
+          />
+        </div>
+
+        <div>
+          <label for="address">Endereço:</label>
+          <input
+            id="address"
+            type="text"
+            placeholder="ex: Rua dos Tabajaras, São Paulo"
+          />
+        </div>
+
+        <a href="index.html">Cancelar</a>
+        <button type="submit">Salvar</button>
+      </form>
+    </main>
+    <script>
+      async function submitClient(event) {
+        event.preventDefault();
+        const name = document.getElementById("name").value;
+        const cpf = document.getElementById("cpf").value;
+        const birthDate = document.getElementById("birthDate").value;
+        const address = document.getElementById("address").value;
+
+        const clientData = {
+          nome: name,
+          cpf: cpf,
+          data_nascimento: birthDate,
+          endereco: address,
+        };
+
+        const response = await fetch("http://localhost:8080/clientes/save", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(clientData),
+        });
+
+        if (response.ok) {
+          window.location.href = "index.html";
+        }
+
+        if (response.status == 400) {
+          const result = await response.json();
+          const errorList = document.getElementById("errorList");
+          result.forEach((message) => {
+            let li = document.createElement("li");
+            li.innerText = message;
+            errorList.appendChild(li);
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
