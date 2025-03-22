@@ -11,6 +11,7 @@
       <div>
         <a href="index.html">Voltar</a>
         <a id="editLink">Editar</a>
+        <button onclick="deleteClient()">excluir</button>
       </div>
 
       <h1 id="name"></h1>
@@ -53,6 +54,21 @@
         let li = document.createElement("li");
         li.innerText = contato.tipo + " " + contato.valor;
         contactsList.appendChild(li);
+      });
+    }
+
+    function deleteClient() {
+      const confirmDelete = confirm(
+        `Tem certeza que deseja excluir esse cliente?`
+      );
+      if (!confirmDelete) return;
+
+      fetch(`http://localhost:8080/clientes/remove/${clientId}`, {
+        method: "DELETE",
+      }).then((response) => {
+        if (response.status == 204) {
+          window.location.href = "index.html";
+        }
       });
     }
   </script>
