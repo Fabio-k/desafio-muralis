@@ -8,7 +8,10 @@
   </head>
   <body>
     <main>
-      <a href="index.html">voltar</a>
+      <div>
+        <a href="index.html">Voltar</a>
+        <a id="editLink">Editar</a>
+      </div>
 
       <h1 id="name"></h1>
       <p id="cpf"></p>
@@ -20,6 +23,9 @@
   <script>
     const params = new URLSearchParams(window.location.search);
     const clientId = params.get("id");
+    const editLink = document.getElementById("editLink");
+    editLink.href = `edit.html?id=${clientId}`;
+
     fetch(`http://localhost:8080/clientes/${clientId}`)
       .then((response) => {
         if (!response.ok) {
@@ -28,10 +34,10 @@
         return response.json();
       })
       .then((data) => {
-        renderCliente(data);
+        renderClient(data);
       });
 
-    function renderCliente(data) {
+    function renderClient(data) {
       const name = document.getElementById("name");
       const cpf = document.getElementById("cpf");
       const birthDate = document.getElementById("birthDate");
