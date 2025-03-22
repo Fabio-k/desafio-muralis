@@ -1,6 +1,7 @@
 package com.muralis.sistemaGerenciamentoContantos.controller;
 
 import com.muralis.sistemaGerenciamentoContantos.dto.ClientDto;
+import com.muralis.sistemaGerenciamentoContantos.dto.ClienteContatoResponseDTO;
 import com.muralis.sistemaGerenciamentoContantos.dto.ClienteResponseDto;
 import com.muralis.sistemaGerenciamentoContantos.service.ClienteService;
 import jakarta.validation.Valid;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/clientes")
@@ -37,6 +40,12 @@ public class ClienteController {
             @RequestParam(name = "cpf", required = false) String cpf) {
         List<ClienteResponseDto> clientes = clienteService.getClientes(name, cpf);
         return ResponseEntity.ok(clientes);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ClienteContatoResponseDTO> findCliente(@PathVariable Long id) {
+        ClienteContatoResponseDTO response = clienteService.findClienteById(id);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/update/{id}")

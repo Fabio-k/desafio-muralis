@@ -1,6 +1,7 @@
 package com.muralis.sistemaGerenciamentoContantos.service;
 
 import com.muralis.sistemaGerenciamentoContantos.dto.ClientDto;
+import com.muralis.sistemaGerenciamentoContantos.dto.ClienteContatoResponseDTO;
 import com.muralis.sistemaGerenciamentoContantos.dto.ClienteResponseDto;
 import com.muralis.sistemaGerenciamentoContantos.entity.Cliente;
 import com.muralis.sistemaGerenciamentoContantos.mapper.ClienteMapper;
@@ -53,5 +54,10 @@ public class ClienteService {
     private String formatParam(String value){
         if (value == null || value.trim().isEmpty()) return null;
         return "%" + value + "%";
+    }
+
+    public ClienteContatoResponseDTO findClienteById(Long id) {
+        Cliente cliente = findCliente(id);
+        return clienteMapper.toClienteContatoDto(cliente);
     }
 }
