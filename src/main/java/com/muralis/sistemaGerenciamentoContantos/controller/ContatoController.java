@@ -18,10 +18,11 @@ import java.util.List;
 public class ContatoController {
     private final ContatoService contatoService;
 
-    @PostMapping("/cliente/{id}/contatos/save")
-    public ResponseEntity<?> saveContato(@PathVariable Long id, @RequestBody @Valid ContatoDto dto, BindingResult result){
+    @PostMapping("/clientes/{id}/contatos/save")
+    public ResponseEntity<?> saveContato(@PathVariable Long id, @RequestBody @Valid ContatoDto dto,
+            BindingResult result) {
         ResponseEntity<?> errors = validateErrors(result);
-        if (errors != null){
+        if (errors != null) {
             return errors;
         }
         ContatoResponseDto responseDto = contatoService.save(id, dto);
@@ -29,30 +30,30 @@ public class ContatoController {
         return ResponseEntity.created(uri).body(responseDto);
     }
 
-    @GetMapping("/cliente/{id}/contatos")
-    public ResponseEntity<List<ContatoResponseDto>> getContatos(@PathVariable Long id){
+    @GetMapping("/clientes/{id}/contatos")
+    public ResponseEntity<List<ContatoResponseDto>> getContatos(@PathVariable Long id) {
         List<ContatoResponseDto> contatos = contatoService.getContatos(id);
         return ResponseEntity.ok(contatos);
     }
 
     @PutMapping("/contatos/update/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid ContatoDto dto, BindingResult result){
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid ContatoDto dto, BindingResult result) {
         ResponseEntity<?> errors = validateErrors(result);
-        if (errors != null){
+        if (errors != null) {
             return errors;
         }
         ContatoResponseDto response = contatoService.update(id, dto);
-        return  ResponseEntity.ok(response);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/contatos/remove/{id}")
-    public ResponseEntity<Void> remove(@PathVariable Long id){
+    public ResponseEntity<Void> remove(@PathVariable Long id) {
         contatoService.remove(id);
         return ResponseEntity.noContent().build();
     }
 
-    private ResponseEntity<?> validateErrors(BindingResult result){
-        if (result.hasErrors()){
+    private ResponseEntity<?> validateErrors(BindingResult result) {
+        if (result.hasErrors()) {
             List<String> errors = result.getAllErrors().stream()
                     .map(ObjectError::getDefaultMessage)
                     .toList();
