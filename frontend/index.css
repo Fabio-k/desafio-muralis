@@ -33,7 +33,11 @@ textarea {
   font-size: 14px;
 }
 
-button {
+a {
+  text-decoration: none;
+}
+
+.button-primary {
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -43,11 +47,7 @@ button {
   font-size: 14px;
 }
 
-a {
-  text-decoration: none;
-}
-
-button:hover {
+.button-primary:hover {
   background-color: #0056b3;
 }
 
@@ -80,4 +80,18 @@ button:hover {
 }
 .inputDiv input {
   grid-column: span 2;
+}
+
+.menuDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.deleteLink {
+  color: red;
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+  font-size: medium;
 }

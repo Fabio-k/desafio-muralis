@@ -5,20 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cliente</title>
     <link rel="stylesheet" href="index.css" />
+    <style>
+      #contactList {
+        list-style: none;
+        padding: 0;
+      }
+      .contatoDiv {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+      }
+    </style>
   </head>
   <body>
     <main>
-      <div>
+      <div class="menuDiv">
         <a href="index.html">Voltar</a>
-        <a id="editLink">Editar</a>
-        <button onclick="deleteClient()">excluir</button>
+        <div>
+          <a id="editLink">Editar</a>
+          <button class="deleteLink" onclick="deleteClient()">Excluir</button>
+        </div>
       </div>
 
       <h1 id="name"></h1>
-      <p id="cpf"></p>
-      <p id="birthDate"></p>
+      <div style="display: flex; gap: 10px">
+        <p id="cpf"></p>
+        <p id="birthDate"></p>
+      </div>
       <p id="address"></p>
-      <a id="newContactLink">Novo contato</a>
+      <h2>Contatos</h2>
+      <a id="newContactLink" class="button-primary">Novo contato</a>
       <ul id="contactList"></ul>
     </main>
   </body>
@@ -44,6 +60,7 @@
       });
 
     function renderClient(data) {
+      console.log(data);
       const name = document.getElementById("name");
       const cpf = document.getElementById("cpf");
       const birthDate = document.getElementById("birthDate");
@@ -52,15 +69,19 @@
 
       name.innerText = data.nome;
       cpf.innerText = data.cpf;
-      birthDate.innerText = data.data_nascimento;
+      birthDate.innerText = data.formattedBirthDate;
       address.innerText = data.endereco;
 
       data.contatos.forEach((contato) => {
         let li = document.createElement("li");
         li.innerHTML = `<div>
-            <p>${contato.tipo} ${contato.valor}</p>
-            <a href="contatos/edit.html?id=${clientId}&contatoId=${contato.id}">Editar</a>
-            <button onclick="deleteContato(${contato.id})">Excluir</button>
+            <div class="contatoDiv">
+                <p>${contato.tipo} ${contato.valor}</p>
+                <div>
+                    <a href="contatos/edit.html?id=${clientId}&contatoId=${contato.id}">Editar</a>
+                    <button class="deleteLink" onclick="deleteContato(${contato.id})">Excluir</button>
+                </div>
+            </div>
         </div>`;
         contactsList.appendChild(li);
       });
