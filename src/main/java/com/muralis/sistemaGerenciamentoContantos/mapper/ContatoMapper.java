@@ -8,8 +8,8 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ContatoMapper {
-    @Mapping(target = "id", ignore = true) // Ignora o campo "id"
-    @Mapping(target = "cliente", ignore = true) // Ignora o campo "cliente"
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "cliente", ignore = true)
     Contato toContato(ContatoDto contatoDto);
 
     @Mapping(source = "cliente.id", target = "cliente_id")

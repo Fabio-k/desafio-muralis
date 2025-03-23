@@ -1,5 +1,7 @@
 package com.muralis.sistemaGerenciamentoContantos.dto;
 
+import com.muralis.sistemaGerenciamentoContantos.entity.Tipo;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +10,7 @@ import lombok.Setter;
 public class ContatoResponseDto {
     private Long id;
     private Long cliente_id;
-    private String tipo;
+    private Tipo tipo;
     private String valor;
     private String observacao;
 }

@@ -29,8 +29,4 @@ public class Contato {
 
     @Column(name = "con_observacao")
     private String observacao;
-
-    public String getTipo() {
-        return tipo.getValor();
-    }
 }

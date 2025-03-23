@@ -49,7 +49,7 @@ function renderClient(data) {
   const observation = document.getElementById("observation");
 
   console.log(data.tipo);
-  type.value = data.tipo == "telefone" ? "TELEFONE" : "EMAIL";
+  type.value = data.tipo;
   value.value = data.valor;
   observation.value = data.observacao;
 }
