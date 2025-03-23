@@ -86,7 +86,8 @@
         const value = document.getElementById("value");
         const observation = document.getElementById("observation");
 
-        type.value = data.tipo;
+        console.log(data.tipo);
+        type.value = data.tipo == "telefone" ? "TELEFONE" : "EMAIL";
         value.value = data.valor;
         observation.value = data.observacao;
       }

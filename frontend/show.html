@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,6 +25,7 @@
   <script>
     const params = new URLSearchParams(window.location.search);
     const clientId = params.get("id");
+
     const editLink = document.getElementById("editLink");
     editLink.href = `edit.html?id=${clientId}`;
 
@@ -56,7 +57,11 @@
 
       data.contatos.forEach((contato) => {
         let li = document.createElement("li");
-        li.innerHTML = `<div><p>${contato.tipo} ${contato.valor}</p><a href="contatos/edit.html?id=${clientId}&contatoId=${contato.id}">Editar</a></div>`;
+        li.innerHTML = `<div>
+            <p>${contato.tipo} ${contato.valor}</p>
+            <a href="contatos/edit.html?id=${clientId}&contatoId=${contato.id}">Editar</a>
+            <button onclick="deleteContato(${contato.id})">Excluir</button>
+        </div>`;
         contactsList.appendChild(li);
       });
     }
@@ -72,6 +77,21 @@
       }).then((response) => {
         if (response.status == 204) {
           window.location.href = "index.html";
+        }
+      });
+    }
+
+    function deleteContato(contatoId) {
+      const confirmDelete = confirm(
+        `Tem certeza que deseja excluir esse contato?`
+      );
+      if (!confirmDelete) return;
+
+      fetch(`http://localhost:8080/contatos/remove/${contatoId}`, {
+        method: "DELETE",
+      }).then((response) => {
+        if (response.status == 204) {
+          window.location.href = `show.html?id=${clientId}`;
         }
       });
     }
