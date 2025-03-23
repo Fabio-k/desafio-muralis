@@ -9,7 +9,7 @@
   <body>
     <main>
       <h1>Editar Contato</h1>
-      <form action="" onsubmit="submitContact(event)">
+      <form id="contactForm">
         <ul id="errorList"></ul>
         <div class="inputDiv">
           <select name="type" id="type">
@@ -24,73 +24,6 @@
       </form>
     </main>
 
-    <script>
-      const params = new URLSearchParams(window.location.search);
-      const clientId = params.get("id");
-      const contatoId = params.get("contatoId");
-
-      const cancelLink = document.getElementById("cancelLink");
-      cancelLink.href = `../show.html?id=${clientId}`;
-
-      async function submitContact(event) {
-        event.preventDefault();
-        const type = document.getElementById("type").value;
-        const value = document.getElementById("value").value;
-        const observation = document.getElementById("observation").value;
-
-        const contactData = {
-          tipo: type,
-          valor: value,
-          observacao: observation,
-        };
-
-        const response = await fetch(
-          `http://localhost:8080/contatos/update/${contatoId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(contactData),
-          }
-        );
-        const result = await response.json();
-
-        if (response.ok) {
-          window.location.href = `../show.html?id=${clientId}`;
-        }
-
-        if (response.status == 400) {
-          const errorList = document.getElementById("errorList");
-          result.forEach((message) => {
-            let li = document.createElement("li");
-            li.innerText = message;
-            errorList.appendChild(li);
-          });
-        }
-      }
-
-      fetch(`http://localhost:8080/contatos/${contatoId}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Erro ao buscar os dados " + response.status);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          renderClient(data);
-        });
-
-      function renderClient(data) {
-        const type = document.getElementById("type");
-        const value = document.getElementById("value");
-        const observation = document.getElementById("observation");
-
-        console.log(data.tipo);
-        type.value = data.tipo == "telefone" ? "TELEFONE" : "EMAIL";
-        value.value = data.valor;
-        observation.value = data.observacao;
-      }
-    </script>
+    <script type="module" src="../js/contatos/edit.js"></script>
   </body>
 </html>

@@ -1,4 +1,5 @@
 import ClientService from "./ClientService.js";
+import ContatoService from "./ContatoService.js";
 
 document.querySelector(".deleteLink").addEventListener("click", () => {
   handleDeleteClient();
@@ -14,6 +15,14 @@ const contactLink = document.getElementById("newContactLink");
 contactLink.href = `contatos/new.html?id=${clientId}`;
 
 ClientService.findClientById(clientId).then((data) => renderClient(data));
+
+const contactsList = document.getElementById("contactList");
+contactsList.addEventListener("click", (event) => {
+  if (event.target.classList.contains("deleteLink")) {
+    const contatoId = event.target.id;
+    deleteContato(contatoId);
+  }
+});
 
 function renderClient(data) {
   console.log(data);
@@ -35,7 +44,7 @@ function renderClient(data) {
                 <p>${contato.tipo} ${contato.valor}</p>
                 <div>
                     <a href="contatos/edit.html?id=${clientId}&contatoId=${contato.id}">Editar</a>
-                    <button class="deleteLink" onclick="deleteContato(${contato.id})">Excluir</button>
+                    <button class="deleteLink" id="${contato.id}">Excluir</button>
                 </div>
             </div>
         </div>`;
@@ -54,11 +63,7 @@ function deleteContato(contatoId) {
   const confirmDelete = confirm(`Tem certeza que deseja excluir esse contato?`);
   if (!confirmDelete) return;
 
-  fetch(`http://localhost:8080/contatos/remove/${contatoId}`, {
-    method: "DELETE",
-  }).then((response) => {
-    if (response.status == 204) {
-      window.location.href = `show.html?id=${clientId}`;
-    }
+  ContatoService.deleteContact(clientId, contatoId).then(() => {
+    document.getElementById(contatoId).closest("li").remove();
   });
 }
