@@ -56,7 +56,7 @@
 
       data.contatos.forEach((contato) => {
         let li = document.createElement("li");
-        li.innerText = contato.tipo + " " + contato.valor;
+        li.innerHTML = `<div><p>${contato.tipo} ${contato.valor}</p><a href="contatos/edit.html?id=${clientId}&contatoId=${contato.id}">Editar</a></div>`;
         contactsList.appendChild(li);
       });
     }

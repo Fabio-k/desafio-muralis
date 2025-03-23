@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Novo contato</title>
+    <title>Editar Contato</title>
     <link rel="stylesheet" href="../index.css" />
   </head>
   <body>
     <main>
-      <h1>Novo contato</h1>
+      <h1>Editar Contato</h1>
       <form action="" onsubmit="submitContact(event)">
         <ul id="errorList"></ul>
         <div class="inputDiv">
@@ -27,6 +27,7 @@
     <script>
       const params = new URLSearchParams(window.location.search);
       const clientId = params.get("id");
+      const contatoId = params.get("contatoId");
 
       const cancelLink = document.getElementById("cancelLink");
       cancelLink.href = `../show.html?id=${clientId}`;
@@ -44,9 +45,9 @@
         };
 
         const response = await fetch(
-          `http://localhost:8080/clientes/${clientId}/contatos/save`,
+          `http://localhost:8080/contatos/update/${contatoId}`,
           {
-            method: "POST",
+            method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
@@ -67,6 +68,27 @@
             errorList.appendChild(li);
           });
         }
+      }
+
+      fetch(`http://localhost:8080/contatos/${contatoId}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Erro ao buscar os dados " + response.status);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          renderClient(data);
+        });
+
+      function renderClient(data) {
+        const type = document.getElementById("type");
+        const value = document.getElementById("value");
+        const observation = document.getElementById("observation");
+
+        type.value = data.tipo;
+        value.value = data.valor;
+        observation.value = data.observacao;
       }
     </script>
   </body>
