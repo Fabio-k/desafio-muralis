@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Novo contato</title>
+    <link rel="stylesheet" href="../index.css" />
+    <style>
+      .inputDiv {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 5px;
+      }
+      .inputDiv input {
+        grid-column: span 2;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Novo contato</h1>
+      <form action="" onsubmit="submitContact(event)">
+        <ul id="errorList"></ul>
+        <div class="inputDiv">
+          <select name="type" id="type">
+            <option value="EMAIL">e-mail</option>
+            <option value="TELEFONE">telefone</option>
+          </select>
+          <input type="text" id="value" placeholder="insira o valor" />
+        </div>
+        <textarea name="" id="observation" placeholder="observação"></textarea>
+        <a id="cancelLink">Cancelar</a>
+        <button type="submit">Salvar</button>
+      </form>
+    </main>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const clientId = params.get("id");
+
+      const cancelLink = document.getElementById("cancelLink");
+      cancelLink.href = `../show.html?id=${clientId}`;
+
+      async function submitContact(event) {
+        event.preventDefault();
+        const type = document.getElementById("type").value;
+        const value = document.getElementById("value").value;
+        const observation = document.getElementById("observation").value;
+
+        const contactData = {
+          tipo: type,
+          valor: value,
+          observacao: observation,
+        };
+
+        const response = await fetch(
+          `http://localhost:8080/clientes/${clientId}/contatos/save`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(contactData),
+          }
+        );
+        const result = await response.json();
+
+        if (response.ok) {
+          window.location.href = `../show.html?id=${clientId}`;
+        }
+
+        if (response.status == 400) {
+          const errorList = document.getElementById("errorList");
+          result.forEach((message) => {
+            let li = document.createElement("li");
+            li.innerText = message;
+            errorList.appendChild(li);
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

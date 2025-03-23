@@ -21,7 +21,9 @@ main {
   box-sizing: border-box;
 }
 
-input {
+input,
+select,
+textarea {
   width: 100%;
   padding: 10px;
   margin: 5px 5px 15px 0;

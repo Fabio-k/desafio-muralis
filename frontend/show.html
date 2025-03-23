@@ -18,6 +18,7 @@
       <p id="cpf"></p>
       <p id="birthDate"></p>
       <p id="address"></p>
+      <a id="newContactLink">Novo contato</a>
       <ul id="contactList"></ul>
     </main>
   </body>
@@ -26,6 +27,9 @@
     const clientId = params.get("id");
     const editLink = document.getElementById("editLink");
     editLink.href = `edit.html?id=${clientId}`;
+
+    const contactLink = document.getElementById("newContactLink");
+    contactLink.href = `contatos/new.html?id=${clientId}`;
 
     fetch(`http://localhost:8080/clientes/${clientId}`)
       .then((response) => {
