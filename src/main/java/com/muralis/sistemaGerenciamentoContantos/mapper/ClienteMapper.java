@@ -9,6 +9,8 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = ContatoMapper.class)
 public interface ClienteMapper {
+    @Mapping(target = "contatos", ignore = true)
+    @Mapping(target = "id", ignore = true)
     Cliente toCliente(ClientDto clientSaveDto);
 
     ClienteResponseDto toDto(Cliente cliente);

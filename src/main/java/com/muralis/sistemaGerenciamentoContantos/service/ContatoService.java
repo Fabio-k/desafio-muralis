@@ -19,14 +19,12 @@ public class ContatoService {
     private final ClienteService clienteService;
     private final ContatoRepository contatoRepository;
 
-
-    public ContatoResponseDto save(Long cliente_id, ContatoDto dto){
+    public ContatoResponseDto save(Long cliente_id, ContatoDto dto) {
         Cliente cliente = clienteService.findCliente(cliente_id);
         Contato contato = contatoMapper.toContato(dto);
         contato.setCliente(cliente);
         return contatoMapper.toDto(contatoRepository.save(contato));
     }
-
 
     public List<ContatoResponseDto> getContatos(Long id) {
         Cliente cliente = clienteService.findCliente(id);
@@ -47,7 +45,15 @@ public class ContatoService {
         contatoRepository.delete(contato);
     }
 
-    private Contato findContato(Long id){
-        return contatoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Contato não foi encontrado"));
+
+    public ContatoResponseDto findContatoById(Long id) {
+      Contato contato = findContato(id);
+      return contatoMapper.toDto(contato);
+    }
+
+
+    private Contato findContato(Long id) {
+        return contatoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Contato não foi encontrado"));
     }
 }

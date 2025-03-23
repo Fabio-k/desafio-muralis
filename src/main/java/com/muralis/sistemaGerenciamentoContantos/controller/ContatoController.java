@@ -30,11 +30,14 @@ public class ContatoController {
         return ResponseEntity.created(uri).body(responseDto);
     }
 
-    @GetMapping("/clientes/{id}/contatos")
-    public ResponseEntity<List<ContatoResponseDto>> getContatos(@PathVariable Long id) {
-        List<ContatoResponseDto> contatos = contatoService.getContatos(id);
-        return ResponseEntity.ok(contatos);
-    }
+
+     @GetMapping("/contatos/{id}")
+     public ResponseEntity<ContatoResponseDto> findContatoById(@PathVariable Long
+      id) {
+      ContatoResponseDto contatos = contatoService.findContatoById(id);
+      return ResponseEntity.ok(contatos);
+     }
+
 
     @PutMapping("/contatos/update/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid ContatoDto dto, BindingResult result) {

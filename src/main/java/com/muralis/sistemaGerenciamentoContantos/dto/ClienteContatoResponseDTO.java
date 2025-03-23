@@ -14,5 +14,5 @@ public class ClienteContatoResponseDTO {
     private String cpf;
     private LocalDate data_nascimento;
     private String endereco;
-    private List<ContatoDto> contatos;
+    private List<ContatoResponseDto> contatos;
 }
