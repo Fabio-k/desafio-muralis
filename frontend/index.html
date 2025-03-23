@@ -35,50 +35,6 @@
       <div id="clientList"></div>
     </main>
 
-    <script>
-      getClients("http://localhost:8080/clientes");
-
-      document.getElementById("searchButton").addEventListener("click", () => {
-        console.log("clicked");
-        const nome = document.getElementById("nameInput").value;
-        const cpf = document.getElementById("cpfInput").value;
-
-        getClients(
-          `http://localhost:8080/clientes?nome=${encodeURIComponent(
-            nome
-          )}&cpf=${encodeURIComponent(cpf)}`
-        );
-      });
-
-      function getClients(url) {
-        return fetch(url)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Erro ao buscar os dados " + response.status);
-            }
-            return response.json();
-          })
-          .then((data) => {
-            renderClientes(data);
-          });
-      }
-
-      function renderClientes(clients) {
-        const container = document.getElementById("clientList");
-        container.innerHTML = "";
-        clients.forEach((client) => {
-          const link = document.createElement("a");
-          link.href = `show.html?id=${client.id}`;
-          const card = document.createElement("div");
-          link.appendChild(card);
-          card.className = "client-card";
-          card.innerHTML = `
-            <p> ${client.nome}</p>
-            <p class="cpfText"> ${client.cpf}</p>
-          `;
-          container.appendChild(link);
-        });
-      }
-    </script>
+    <script type="module" src="./js/index.js"></script>
   </body>
 </html>

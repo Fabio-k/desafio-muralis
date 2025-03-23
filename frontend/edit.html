@@ -9,7 +9,7 @@
   <body>
     <main>
       <h1>Editar Cliente</h1>
-      <form onsubmit="submitClient(event)" method="post">
+      <form id="clientForm" method="post">
         <ul id="errorList"></ul>
         <div>
           <label for="name">Nome:</label>
@@ -43,76 +43,6 @@
         <button type="submit">Salvar</button>
       </form>
     </main>
-    <script>
-      const params = new URLSearchParams(window.location.search);
-      const clientId = params.get("id");
-
-      const cancelLink = document.getElementById("cancelLink");
-      cancelLink.href = `show.html?id=${clientId}`;
-
-      fetch(`http://localhost:8080/clientes/${clientId}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Erro ao buscar os dados " + response.status);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          renderClient(data);
-        });
-
-      function renderClient(data) {
-        const name = document.getElementById("name");
-        const cpf = document.getElementById("cpf");
-        const birthDate = document.getElementById("birthDate");
-        const address = document.getElementById("address");
-        const contactsList = document.getElementById("contactList");
-
-        name.value = data.nome;
-        cpf.value = data.cpf;
-        birthDate.value = data.dataNascimento;
-        address.value = data.endereco;
-      }
-
-      async function submitClient(event) {
-        event.preventDefault();
-        const name = document.getElementById("name").value;
-        const cpf = document.getElementById("cpf").value;
-        const birthDate = document.getElementById("birthDate").value;
-        const address = document.getElementById("address").value;
-
-        const clientData = {
-          nome: name,
-          cpf: cpf,
-          dataNascimento: birthDate,
-          endereco: address,
-        };
-
-        const response = await fetch(
-          `http://localhost:8080/clientes/update/${clientId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(clientData),
-          }
-        );
-        const result = await response.json();
-
-        if (response.ok) {
-          window.location.href = `show.html?id=${result.id}`;
-        }
-
-        if (response.status == 400) {
-          const errorList = document.getElementById("errorList");
-          result.forEach((message) => {
-            let li = document.createElement("li");
-            li.innerText = message;
-            errorList.appendChild(li);
-          });
-        }
-      }
-    </script>
+    <script type="module" src="./js/edit.js"></script>
   </body>
 </html>

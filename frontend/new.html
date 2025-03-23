@@ -9,7 +9,7 @@
   <body>
     <main>
       <h1>Novo Cliente</h1>
-      <form onsubmit="submitClient(event)" method="post">
+      <form id="clientForm" method="post">
         <ul id="errorList"></ul>
         <div>
           <label for="name">Nome:</label>
@@ -43,43 +43,6 @@
         <button type="submit" class="button-primary">Salvar</button>
       </form>
     </main>
-    <script>
-      async function submitClient(event) {
-        event.preventDefault();
-        const name = document.getElementById("name").value;
-        const cpf = document.getElementById("cpf").value;
-        const birthDate = document.getElementById("birthDate").value;
-        const address = document.getElementById("address").value;
-
-        const clientData = {
-          nome: name,
-          cpf: cpf,
-          dataNascimento: birthDate,
-          endereco: address,
-        };
-
-        const response = await fetch("http://localhost:8080/clientes/save", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(clientData),
-        });
-        const result = await response.json();
-
-        if (response.ok) {
-          window.location.href = `show.html?id=${result.id}`;
-        }
-
-        if (response.status == 400) {
-          const errorList = document.getElementById("errorList");
-          result.forEach((message) => {
-            let li = document.createElement("li");
-            li.innerText = message;
-            errorList.appendChild(li);
-          });
-        }
-      }
-    </script>
+    <script type="module" src="./js/new.js"></script>
   </body>
 </html>
