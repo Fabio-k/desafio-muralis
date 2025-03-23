@@ -16,5 +16,6 @@ public interface ClienteMapper {
     ClienteResponseDto toDto(Cliente cliente);
 
     @Mapping(target = "contatos", source = "contatos")
+    @Mapping(target = "formattedBirthDate", source = "dataNascimento")
     ClienteContatoResponseDTO toClienteContatoDto(Cliente cliente);
 }

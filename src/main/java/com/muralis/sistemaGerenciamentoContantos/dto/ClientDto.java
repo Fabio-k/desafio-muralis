@@ -22,7 +22,7 @@ public class ClientDto {
 
     @NotNull(message = "Data de nascimento é obrigatória")
     @Past(message = "Data de nascimento deve ser válida")
-    private LocalDate data_nascimento;
+    private LocalDate dataNascimento;
 
 
     private String endereco;

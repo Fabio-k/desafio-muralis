@@ -26,7 +26,7 @@ public class Cliente {
     private String cpf;
 
     @Column(name = "cli_data_nascimento")
-    private LocalDate data_nascimento;
+    private LocalDate dataNascimento;
 
     @Column(name = "cli_endereco")
     private String endereco;

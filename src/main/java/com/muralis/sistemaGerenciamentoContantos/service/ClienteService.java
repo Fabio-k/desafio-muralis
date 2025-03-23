@@ -36,7 +36,7 @@ public class ClienteService {
         Cliente cliente = findCliente(id);
         cliente.setCpf(dto.getCpf());
         cliente.setNome(dto.getNome());
-        cliente.setData_nascimento(dto.getData_nascimento());
+        cliente.setDataNascimento(dto.getDataNascimento());
         cliente.setEndereco(dto.getEndereco());
         return clienteMapper.toDto(clienteRepository.save(cliente));
     }

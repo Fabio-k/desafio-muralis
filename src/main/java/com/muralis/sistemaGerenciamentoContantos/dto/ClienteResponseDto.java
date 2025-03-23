@@ -11,6 +11,6 @@ public class ClienteResponseDto {
     private Long id;
     private String nome;
     private String cpf;
-    private LocalDate data_nascimento;
+    private LocalDate dataNascimento;
     private String endereco;
 }
