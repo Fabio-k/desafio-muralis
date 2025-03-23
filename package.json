@@ -1,0 +1,23 @@
+{
+  "name": "sistemagerenciamentocontantos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server ./frontend -p 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fabio-k/desafio-muralis.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fabio-k/desafio-muralis/issues"
+  },
+  "homepage": "https://github.com/Fabio-k/desafio-muralis#readme",
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}
