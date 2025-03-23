@@ -1,11 +1,11 @@
 package com.muralis.sistemaGerenciamentoContantos.entity;
 
 public enum Tipo {
-    EMAIL("e-mail"), TELEFONE("telefone");
+    EMAIL("E-mail"), TELEFONE("Telefone");
 
     private final String valor;
 
-    Tipo(String valor){
+    Tipo(String valor) {
         this.valor = valor;
     }
 
