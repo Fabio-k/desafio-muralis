@@ -4,6 +4,19 @@
     <meta charset="UTF-8" />
     <title>Clientes</title>
     <link rel="stylesheet" href="index.css" />
+    <style>
+      .button-secondary {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 10px 0px;
+      }
+      .button-secondary:hover {
+        background-color: rgb(239, 239, 239);
+      }
+    </style>
   </head>
   <body>
     <main>
@@ -15,7 +28,7 @@
         <button id="searchButton" type="button">pesquisar</button>
       </div>
 
-      <a href="new.html">Novo contato</a>
+      <a class="button-secondary" href="new.html">Novo contato</a>
 
       <div id="clientList"></div>
     </main>
