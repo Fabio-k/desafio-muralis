@@ -3,6 +3,7 @@
 ## Índice
 
 - [Descrição](#descrição)
+- [Estrutura do projeto](#estrutura-do-projeto)
 - [Dependências](#dependências)
 - [Como Rodar o Projeto](#como-rodar-o-projeto)
 - [Testes](#testes)
@@ -10,7 +11,52 @@
 
 ## Descrição
 
-Este projeto foi desenvolvido como parte de um desafio técnico proposto pela empresa Muralis Tecnologia. O objetivo era criar um sistema de gestão de contatos com funcionalidades como criação, edição e visualização de clientes e seus contatos. Para isso, utilizei Spring Boot no backend e JavaScript no frontend, garantindo integração com um banco de dados PostgreSQL.
+Este projeto foi desenvolvido como parte de um desafio técnico proposto pela empresa Muralis Tecnologia. O objetivo era criar um sistema de gestão de contatos com funcionalidades como criação, edição e visualização de clientes e seus contatos.
+
+## Estrutura do projeto
+
+Visão geral
+
+```bash
+├── README.md #documentação
+├── backend #Aplicação Spring Boot e scrips do banco de dados
+├── docker-compose.yml # docker com imagem do banco de dados pronta para uso
+├── frontend # Aplicação HTML CSS e Javascript
+├── .env.example #exemplo de como deve ser o .env
+└── testes.postman_collection.json #Testes do Postman
+```
+
+backend detalhasdo
+
+```bash
+├── SistemaGerenciamentoContantosApplication.java
+├── configuration
+│   └── WebConfig.java #Configurações do CORS
+├── controller
+│   ├── ClienteController.java
+│   └── ContatoController.java
+├── dto #DTO da aplicação
+│   ├── ClientDto.java
+│   ├── ClienteContatoResponseDTO.java # Dto usado para respostas que incluem o cliente e seus respectivos contatos
+│   ├── ClienteResponseDto.java # Dto contento resposta apenas com os dados do cliente
+│   ├── ContatoDto.java
+│   └── ContatoResponseDto.java
+├── entity
+│   ├── Cliente.java
+│   ├── Contato.java
+│   └── Tipo.java #Enum para o tipo de contato
+├── exceptions
+│   └── GlobalExceptionHandler.java
+├── mapper
+│   ├── ClienteMapper.java
+│   └── ContatoMapper.java
+├── repository
+│   ├── ClienteRepository.java
+│   └── ContatoRepository.java
+└── service
+    ├── ClienteService.java
+    └── ContatoService.java
+```
 
 ## Dependências
 
