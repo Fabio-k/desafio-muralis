@@ -26,7 +26,7 @@ Visão geral
 └── testes.postman_collection.json #Testes do Postman
 ```
 
-backend detalhasdo
+backend detalhado
 
 ```bash
 ├── SistemaGerenciamentoContantosApplication.java

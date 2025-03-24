@@ -33,9 +33,9 @@ function renderClient(data) {
   const contactsList = document.getElementById("contactList");
 
   name.innerText = data.nome;
-  cpf.innerText = data.cpf;
-  birthDate.innerText = data.formattedBirthDate;
-  address.innerText = data.endereco;
+  cpf.innerText = "cpf: " + data.cpf;
+  birthDate.innerText = "data de nascimento: " + data.formattedBirthDate;
+  address.innerText = "endereço: " + data.endereco;
 
   data.contatos.forEach((contato) => {
     let li = document.createElement("li");
@@ -47,6 +47,7 @@ function renderClient(data) {
                     <button class="deleteLink" id="${contato.id}">Excluir</button>
                 </div>
             </div>
+            <p>${contato.observacao}</p>
         </div>`;
     contactsList.appendChild(li);
   });
