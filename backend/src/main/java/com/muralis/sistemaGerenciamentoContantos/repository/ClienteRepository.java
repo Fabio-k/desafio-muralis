@@ -6,9 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     @Query("SELECT c FROM Cliente c WHERE (:nome IS NULL OR c.nome LIKE :nome) AND (:cpf IS NULL OR c.cpf LIKE :cpf)")
     List<Cliente> findWithFilter(String nome, String cpf);
+
+    Optional<Cliente> findByCpf(String cpf);
 }

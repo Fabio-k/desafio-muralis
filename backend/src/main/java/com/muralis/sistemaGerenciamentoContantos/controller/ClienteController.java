@@ -12,6 +12,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +25,7 @@ public class ClienteController {
 
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody @Valid ClientDto dto, BindingResult result) {
-        ResponseEntity<?> errors = validateErrors(result);
+        ResponseEntity<?> errors = validateErrors(result, null, dto.getCpf());
         if (errors != null) {
             return errors;
         }
@@ -50,7 +51,7 @@ public class ClienteController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid ClientDto dto, BindingResult result) {
-        ResponseEntity<?> errors = validateErrors(result);
+        ResponseEntity<?> errors = validateErrors(result, id, dto.getCpf());
         if (errors != null) {
             return errors;
         }
@@ -64,12 +65,18 @@ public class ClienteController {
         return ResponseEntity.noContent().build();
     }
 
-    private ResponseEntity<?> validateErrors(BindingResult result) {
+    private ResponseEntity<?> validateErrors(BindingResult result,Long id, String cpf) {
+        List<String> errors = new ArrayList<>();
+        if (!clienteService.isCpfUnique(id, cpf)) {
+            errors.add("CPF deve ser único");
+        }
         if (result.hasErrors()) {
-            List<String> errors = result.getAllErrors().stream()
+            List<String> validationErros = result.getAllErrors().stream()
                     .map(ObjectError::getDefaultMessage)
                     .toList();
-
+            errors.addAll(validationErros);
+        }
+        if (!errors.isEmpty()) {
             return ResponseEntity.badRequest().body(errors);
         }
         return null;

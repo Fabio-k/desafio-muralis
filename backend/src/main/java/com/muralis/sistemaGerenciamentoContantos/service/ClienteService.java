@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClienteService {
@@ -20,7 +21,7 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public ClienteResponseDto save(ClientDto dto){
+    public ClienteResponseDto save(ClientDto dto) {
         Cliente cliente = clienteMapper.toCliente(dto);
 
         return clienteMapper.toDto(clienteRepository.save(cliente));
@@ -46,13 +47,28 @@ public class ClienteService {
         clienteRepository.delete(cliente);
     }
 
-    public Cliente findCliente(Long id){
+    public Cliente findCliente(Long id) {
         return clienteRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
     }
 
-    private String formatParam(String value){
-        if (value == null || value.trim().isEmpty()) return null;
+    public Boolean isCpfUnique(Long id, String cpf) {
+        if (cpf == null)
+            return false;
+        Optional<Cliente> cliente = clienteRepository.findByCpf(cpf);
+        if (cliente.isEmpty() || id == null)
+            return true;
+
+        Cliente actualCliente = cliente.get();
+        if (id.equals(actualCliente.getId())) {
+            return true;
+        }
+        return false;
+    }
+
+    private String formatParam(String value) {
+        if (value == null || value.trim().isEmpty())
+            return null;
         return "%" + value + "%";
     }
 
