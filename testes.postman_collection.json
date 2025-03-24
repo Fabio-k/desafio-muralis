@@ -1,0 +1,666 @@
+{
+	"info": {
+		"_postman_id": "5c23fa46-83dd-48bf-854d-cd9d951fc212",
+		"name": "testes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42553515"
+	},
+	"item": [
+		{
+			"name": "Criar Cliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 201 created status\", () => {",
+							"    pm.response.to.have.status(201)",
+							"    ",
+							"    pm.collectionVariables.set('createdClientId', pm.response.json().id)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"marcelo\",\n    \"cpf\": \"12341234321\",\n    \"dataNascimento\": \"2008-04-22\",\n    \"endereco\": \"rua xyz\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/clientes/save",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"clientes",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Erro ao tentar Criar Cliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 400 bad request status\", () => {",
+							"    pm.response.to.have.status(400)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"marcelo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/clientes/save",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"clientes",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Erro ao tentar Criar Contato Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 400 bad request status\", () => {",
+							"    pm.response.to.have.status(400)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/clientes/{{createdClientId}}/contatos/save",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"clientes",
+						"{{createdClientId}}",
+						"contatos",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Contato",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 201 created status\", () => {",
+							"    pm.response.to.have.status(201)",
+							"    pm.collectionVariables.set('createdContatoId', pm.response.json().id)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tipo\": \"EMAIL\",\n    \"valor\": \"marcelo.oliveira@email.com\",\n    \"observacao\": \"email particular\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/clientes/{{createdClientId}}/contatos/save",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"clientes",
+						"{{createdClientId}}",
+						"contatos",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter cliente pelo nome",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 200 Ok status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Return the right data\", () => {",
+							"    pm.expect(pm.response.json()).to.have.lengthOf(1);",
+							"    pm.expect(pm.response.json()[0].nome).to.be.equal(\"marcelo\");",
+							"    pm.expect(pm.response.json()[0].cpf).to.be.equal(\"12341234321\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/clientes?nome=marcelo",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"clientes"
+					],
+					"query": [
+						{
+							"key": "nome",
+							"value": "marcelo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter cliente pelo nome e cpf",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 200 Ok status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Return the right data\", () => {",
+							"    pm.expect(pm.response.json()).to.have.lengthOf(1);",
+							"    pm.expect(pm.response.json()[0].nome).to.be.equal(\"marcelo\");",
+							"    pm.expect(pm.response.json()[0].cpf).to.be.equal(\"12341234321\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/clientes?nome=mar&cpf=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"clientes"
+					],
+					"query": [
+						{
+							"key": "nome",
+							"value": "mar"
+						},
+						{
+							"key": "cpf",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter clientes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 200 Ok status\", () => {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/clientes",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter cliente pelo id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 200 Ok status\", () => {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/clientes/{{createdClientId}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"clientes",
+						"{{createdClientId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar cliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 200 Ok status\", () => {",
+							"    pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"Return updated data\", () => {",
+							"    pm.expect(pm.response.json().nome).to.be.equal(\"marcelo\");",
+							"    pm.expect(pm.response.json().cpf).to.be.equal(\"10101010101\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"marcelo\",\n    \"cpf\": \"10101010101\",\n    \"dataNascimento\": \"2004-04-23\",\n    \"endereco\": \"rua xyz\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/clientes/update/{{createdClientId}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"clientes",
+						"update",
+						"{{createdClientId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Erro ao tentar editar cliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 400 bad request status\", () => {",
+							"    pm.response.to.have.status(400)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/clientes/update/{{createdClientId}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"clientes",
+						"update",
+						"{{createdClientId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar contato",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 200 Ok status\", () => {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"Return updated data\", () => {",
+							"    pm.expect(pm.response.json().tipo).to.be.equal(\"EMAIL\");",
+							"    pm.expect(pm.response.json().valor).to.be.equal(\"marcelo@email.comm\");",
+							"    pm.expect(pm.response.json().observacao).to.be.equal(\"email de trabalho\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tipo\": \"EMAIL\",\n    \"valor\": \"marcelo@email.comm\",\n    \"observacao\": \"email de trabalho\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/contatos/update/{{createdContatoId}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"contatos",
+						"update",
+						"{{createdContatoId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Erro ao tentar editar contato",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 400 bad request status\", () => {",
+							"    pm.response.to.have.status(400)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/contatos/update/{{createdContatoId}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"contatos",
+						"update",
+						"{{createdContatoId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar Contato",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 204 No Content status\", () => {",
+							"    pm.response.to.have.status(204)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/contatos/remove/{{createdContatoId}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"contatos",
+						"remove",
+						"{{createdContatoId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar Cliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 204 No Content status\", () => {",
+							"    pm.response.to.have.status(204)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/clientes/remove/{{createdClientId}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"clientes",
+						"remove",
+						"{{createdClientId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseurl",
+			"value": "localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "createdClientId",
+			"value": ""
+		},
+		{
+			"key": "createdContatoId",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
