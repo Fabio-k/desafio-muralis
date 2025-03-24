@@ -1,5 +1,13 @@
 # Desafio - Sistema de gestão de contatos
 
+## Índice
+
+- [Descrição](#descrição)
+- [Dependências](#dependências)
+- [Como Rodar o Projeto](#como-rodar-o-projeto)
+- [Testes](#testes)
+- [Melhorias](#melhorias)
+
 ## Descrição
 
 Este projeto foi desenvolvido como parte de um desafio técnico proposto pela empresa Muralis Tecnologia. O objetivo era criar um sistema de gestão de contatos com funcionalidades como criação, edição e visualização de clientes e seus contatos. Para isso, utilizei Spring Boot no backend e JavaScript no frontend, garantindo integração com um banco de dados PostgreSQL.
@@ -21,9 +29,11 @@ Este projeto foi desenvolvido como parte de um desafio técnico proposto pela em
 
 ## Como Rodar o projeto
 
+Crie um arquivo .env seguindo o exemplo do [`.env.example`](./.env.example).
+
 ### Banco de dados
 
-Rode os dois arquivos Sql na pasta `backend/src/main/resources/db` no seu postgres
+caso queira usar o postgres local lembre de configurar as variaveis de ambiente e rode os dois arquivos Sql na pasta [`backend/src/main/resources/db`](./backend/src/main/resources/db/) no seu banco local
 
 Ou inicie o docker compose:
 
@@ -32,6 +42,7 @@ Ou inicie o docker compose:
 ```
 
 ### Backend
+
 O backend está configurado para rodar na porta 8080
 
 ```bash
@@ -41,6 +52,7 @@ O backend está configurado para rodar na porta 8080
 ```
 
 ### Frontend
+
 O Frontend está configurado para rodar na porta 3000
 
 ```bash
@@ -49,8 +61,12 @@ O Frontend está configurado para rodar na porta 3000
     npm run start
 ```
 
+## Testes
+
+No postman clique em importar e selecione o arquivo [`testes.postman_collection.json`](./testes.postman_collection.json) na raiz do repositório
+
 ## Melhorias
 
-**Utilização de um framework**: Achei que conseguiria manter uma boa legibilidade no front sem usar frameworks mas estava enganado a legibilidade do javascript usado nas páginas poderia estar componentizado se eu tivesse usado um framework o que teria dado uma melhor legibilidade e reusabilidade.
+**Utilização de um framework**: A utilização de um framework como React ou Vue.js poderia melhorar a legibilidade e reusabilidade do código no frontend. Isso permitiria a criação de componentes reutilizáveis e uma melhor organização do código.
 
-**Melhor visualização de dados**: Os dados como cpf e telefone não possuem formatação automática para que seja mais fácil do usuário ler os dados e inseri - los
+**Melhor visualização de dados**: Adicionar formatação automática para campos como CPF e telefone melhoraria a experiência do usuário.
